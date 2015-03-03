@@ -18,10 +18,13 @@ class node(object):
         self.next_node = None
 
 
+
 class linked_list(object):
     def __init__(self):
         self.head = node(None)
         self.head.next_node = None
+        print ("Cons: Inserted {} with link{}".format(self.head.data, self.head.next_node))
+
 
     def push(self, x):
         temp = node(x)
@@ -48,16 +51,26 @@ class linked_list(object):
 
 
 class special_linked_list(linked_list):
-    def push(self,x):
-        position = 0
-        temp = self.head
-        prev = self.head
-        while (x > temp.data and temp.next_node):
-            temp = temp.next_node
-            prev = temp
-        new_node = node(x)
-        new_node.next_node = prev.next_node
-        prev.next_node = new_node
+    def top(self):
+        return self.head.data
+
+    def push(self, x):
+
+        # special case for head end
+        temp = node(x)
+        if (self.head.next_node is None) or (self.head.data > temp.data):
+            temp.next_node = self.head
+            self.head = temp
+
+        # for other cases
+        else:
+            current = self.head
+            while (current.next_node and temp.data >= current.next_node.data):
+                current = current.next_node
+            temp.next_node = current.next_node
+            current.next_node = temp
+
+        #print ("Inserted {} with link{}".format(temp.data, temp.next_node))
 
     def remove(self,x):
         position = 0
@@ -68,6 +81,12 @@ class special_linked_list(linked_list):
             prev = temp
 
         prev.next_node = temp.next_node
+
+    def print_list(self):
+        temp = self.head
+        while (temp.next_node):
+            print temp.data
+            temp = temp.next_node
 
 
 
@@ -115,20 +134,35 @@ class MinStack:
 
     # @return an integer
     def getMin(self):
-        return 1
+        return self.list_min.top()
 
     def print_stack(self):
+        print("main stack")
         self.list_c.print_list()
+        print("\nmin stack")
+        self.list_min.print_list()
 
 
 def main():
     m = MinStack()
-    m.push(1)
+    m.push(12)
     m.push(3)
     m.push(4)
+    m.push(7)
+    m.push(2)
+    m.push(9)
+    m.push(11)
+    m.push(0)
+    m.push(14   )
+    m.push(13)
+    m.push(5)
+    m.push(-10)
     print(m.top())
-    print(m.pop())
+    #print(m.pop())
     print(m.top())
+    print(m.getMin())
+    #m.print_stack()
+    #print ("Min stack")
     m.print_stack()
 
 
