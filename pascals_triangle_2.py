@@ -1,19 +1,30 @@
 '''
-Given numRows, generate the first numRows of Pascal's triangle.
+Given an index k, return the kth row of the Pascal's triangle.
 
-For example, given numRows = 5,
-Return
+For example, given k = 3,
+Return [1,3,3,1].
 
-[
-     [1],
-    [1,1],
-   [1,2,1],
-  [1,3,3,1],
- [1,4,6,4,1]
-]
+Note:
+Could you optimize your algorithm to use only O(k) extra space?
 '''
 
+
 class Solution:
+    # @return a list of integers
+    def getRow(self, rowIndex):
+        prev_row = [0]*rowIndex
+        next_row = [0]*rowIndex
+        prev_row[0] = 1
+        next_row [0] = 1
+
+        for i in range(1,rowIndex):
+            for j in range(1,i):
+                next_row[j] = prev_row[j-1] + prev_row[j]
+                prev_row = next_row
+
+        return next_row
+
+class Solution3:
     # @return a list of lists of integers
     def generate(self, numRows):
         pyramid = [[1 for i in xrange(rows)] for rows in xrange(1, numRows+1)]
@@ -43,12 +54,15 @@ class Solution2:
 
 
 def main():
-    s = Solution2()
-    p = s.generate(5)
-    print(p)
-    q = Solution()
-    p = q.generate(5)
-    print(p)
+    # s = Solution2()
+    # p = s.generate(5)
+    # print(p)
+    # q = Solution3()
+    # p = q.generate(5)
+    # print(p)
+    #
+    s = Solution()
+    print (s.getRow(1))
 
 if __name__ == "__main__":
     main()
