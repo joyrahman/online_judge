@@ -12,45 +12,22 @@ Could you optimize your algorithm to use only O(k) extra space?
 class Solution:
     # @return a list of integers
     def getRow(self, rowIndex):
-        prev_row = [0]*rowIndex
-        next_row = [0]*rowIndex
-        prev_row[0] = 1
-        next_row [0] = 1
+        prev_row = []
+        for i in range(0,rowIndex):
+            next_row = [0]*rowIndex
 
-        for i in range(1,rowIndex):
-            for j in range(1,i):
-                next_row[j] = prev_row[j-1] + prev_row[j]
-                prev_row = next_row
+            for j in range(0,i+1):
+                #print "before",next_row,
 
-        return next_row
-
-class Solution3:
-    # @return a list of lists of integers
-    def generate(self, numRows):
-        pyramid = [[1 for i in xrange(rows)] for rows in xrange(1, numRows+1)]
-        #print pyramid
-        for i in range(1, numRows):
-            for j in range(1,i):
-                 # if j==1 or j==i:
-                 #     pyramid[i][j] = 1
-                 # else:
-                    pyramid[i][j] = pyramid[i-1][j-1] + pyramid[i-1][j]
+                if(j == 0) or (j == i):
+                    next_row[j]=1
+                else:
+                    next_row[j] = prev_row[j-1] + prev_row[j]
+                #print "after{}=>{}".format(i,j),next_row,'\n'
+            prev_row = next_row
 
 
-
-
-        return pyramid
-
-
-class Solution2:
-    # @return a list of lists of integers
-    def generate(self, numRows):
-        if not numRows: return []
-        out = [[1 for i in xrange(row)] for row in xrange(1, numRows+1)]
-        print out
-        for row in xrange(1, numRows):
-            for i in xrange(1, row): out[row][i] = out[row-1][i-1] + out[row-1][i]
-        return out
+        return prev_row
 
 
 def main():
@@ -62,7 +39,7 @@ def main():
     # print(p)
     #
     s = Solution()
-    print (s.getRow(1))
+    print (s.getRow(5))
 
 if __name__ == "__main__":
     main()
