@@ -12,6 +12,7 @@ Could you optimize your algorithm to use only O(k) extra space?
 class Solution:
     # @return a list of integers
     def getRow(self, rowIndex):
+        rowIndex = rowIndex+1
         prev_row = []
         for i in range(0,rowIndex):
             next_row = [0]*rowIndex
@@ -39,7 +40,7 @@ def main():
     # print(p)
     #
     s = Solution()
-    print (s.getRow(5))
+    print (s.getRow(0))
 
 if __name__ == "__main__":
     main()
