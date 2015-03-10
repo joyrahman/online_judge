@@ -25,6 +25,9 @@ class Solution:
     def int_overflow(self,val):
         if not -sys.maxint-1 <= val <= sys.maxint:
             return True
+        if val >= math.pow(2,31):
+            return True
+
         return False
     def detect_additive_overflow(self,a,b):
         if a<b:
